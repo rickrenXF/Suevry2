@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div class="container pt-5 pb-5">
+        <form id="app" class="page">
+            <span v-for="e in errors" :key="e.id">{{e}}</span>
+
+            <!-- Front Page -->
+            <section v-if="step==0">
+                <div class="head"></div>
+                <div>
+                    <h1 style="text-align: center;font-size: 60px;height: 200px;margin-top: 50px;">Wellbeing<br>Check In
+                    </h1>
+                </div>
+                <div style="height: 160px;text-align: center;background-color: rgb(240, 200, 186);padding-top: 40px;">
+                    <p style="font-size: 25px;"><strong>ESTIMATED TIME</strong></p>
+                    <p style="font-size: 25px;">5 mins</p>
+                </div>
+            </section>
+           <div v-if="step==0" style="height: 235px;">
+
+            <button @click.prevent="nextStep" class="startButton"  >Get started</button>
+           </div>
+                
+            
+
+            <!-- Page1 -->
+
+            <section v-if="step==1">
+                <div>
+                    <h1 style="text-align: center;">Question 1</h1>
+                </div>
+                <div>
+                    <h3>My family and I are doing well</h3>
+                </div>
+                <div>
+                    <p>My family and I are doing well</p>
+                </div>
+
+                <input type="text" placeholder="what is your name" class="form-control form-control-lg"
+                    v-model="form.name">
+            </section>
+
+            <!-- Page2 -->
+            <section v-if="step==2">
+                <h3>Question 2</h3>
+                <p>What is your telephone number?</p>
+                <input type="tel" placeholder="what is your phonenumber" class="form-control form-control-lg"
+                    v-model="form.phone">
+                <input type="email" placeholder="what is your email address" class="form-control form-control-lg"
+                    v-model="form.email">
+            </section>
+
+            <!-- Page3 -->
+            <section v-if="step==3">
+                <h3>Question 3</h3>
+                <p>What message do you like to put</p>
+                <textarea placeholder="text your message" class="form-control form-control-lg"
+                    v-model="form.message"></textarea>
+
+            </section>
+
+            <!-- Page4 -->
+            <section v-if="step==4">
+                <h3>Question 4</h3>
+                <p>What message do you like to put</p>
+                <textarea placeholder="text your message" class="form-control form-control-lg"
+                    v-model="form.message"></textarea>
+
+            </section>
+
+            <!-- Page5 -->
+            <section v-if="step==5">
+                <h3>Question 5</h3>
+                <p>What message do you like to put</p>
+                <textarea placeholder="text your message" class="form-control form-control-lg"
+                    v-model="form.message"></textarea>
+
+            </section>
+
+            <!-- Page6 -->
+            <section v-if="step==6">
+                <h3>Question 6</h3>
+                <p>What message do you like to put</p>
+                <textarea placeholder="text your message" class="form-control form-control-lg"
+                    v-model="form.message"></textarea>
+
+            </section>
+
+            <!-- Page7 -->
+            <section v-if="step==7">
+                <h3>Question 7</h3>
+                <p>What message do you like to put</p>
+                <textarea placeholder="text your message" class="form-control form-control-lg"
+                    v-model="form.message"></textarea>
+
+            </section>
+
+
+
+            <button @click.prevent="previousStep" v-if="step>0">Previous</button>
+            <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps">Next</button>
+            <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry">Complete</button>
+
+            <p v-if="showResult">{{form.name}} {{form.email}} {{form.message}}</p>
+
+        </form>
+
+
+
+
+    </div>
+    <script>
+        const App = new Vue({
+
+            el: "#app",
+            data: {
+                step: 0,
+                totalSteps: 7,
+                form: {
+                    name: null,
+                    email: null,
+                    phone: null,
+                    message: null
+                },
+                errors: [],
+                showResult: false,
+            },
+            methods: {
+                nextStep: function () {
+                    if (this.step == 1) {
+                        if (!this.form.name) {
+                            this.errors = 'Please the fill the form.';
+                            return alert('Please the fill the form.');
+                        }
+                    }
+                    if (this.step == 2) {
+                        if (!this.form.phone || !this.form.email) {
+                            this.errors = 'Please the fill the form.';
+                            return alert('Please the fill the form.');
+                        }
+                    }
+
+
+                    this.step++;
+                },
+                previousStep: function () {
+                    this.step--;
+                },
+
+                sendEnquiry: function () {
+                    if (this.step == 3) {
+                        if (!this.form.message) {
+                            this.errors = 'Please the fill the form.';
+                            return alert('Please the fill the form.');
+                        }
+                    }
+                    this.errors = null;
+                    this.showResult = !this.showResult;
+
+                }
+            },
+            mounted() {
+
+            }
+
+
+        })
+
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
