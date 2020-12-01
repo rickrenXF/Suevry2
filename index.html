@@ -37,10 +37,7 @@
                 <button @click.prevent="nextStep" class="startButton">Get started</button>
             </div>
 
-
-
             <!-- Page1 -->
-
             <section v-if="step==1">
                 <div class="head">
                     <div class="logo">
@@ -57,26 +54,35 @@
                     </div>
 
                     <div style="margin-bottom: 80px;" class="sliderContainer">
-                        <input type="range" min=1 max=6 value=1 class="slider"
-                             v-model="question1Answer">
-                             <!-- @change="question1Display(question1Answer)" -->
+                        <input type="range" min=1 max=6 value=1 class="slider" v-model="question1Answer">
+                        <!-- @change="question1Display(question1Answer)" -->
                     </div>
 
                 </div>
 
-                <!-- <input type="text" placeholder="what is your name" class="form-control form-control-lg"
-                    v-model="form.name"> -->
             </section>
 
             <!-- Page2 -->
             <section v-if="step==2">
-                <div class="head"></div>
-                <h3>Question 2</h3>
-                <p>What is your telephone number?</p>
-                <input type="tel" placeholder="what is your phonenumber" class="form-control form-control-lg"
-                    v-model="form.phone">
-                <input type="email" placeholder="what is your email address" class="form-control form-control-lg"
-                    v-model="form.email">
+                <div class="head">
+                    <div class="logo">
+                        <img src="./images/logo.png" style="margin-right:30px">Question 2
+                    </div>
+                </div>
+                <div style="height: 300px;text-align: center;padding: 30px;">
+                    <h3 class="question">I'm keeping in regular contact with my team</h3>
+                </div>
+                <div>
+                    <div style="height: 130px;text-align: center;font-family:'Times New Roman', Times, serif;">
+                        <p style="color:rgb(208, 73, 26);font-size: 40px;">{{question2Show}}</p>
+                    </div>
+
+                    <div style="margin-bottom: 80px;" class="sliderContainer">
+                        <input type="range" min=1 max=6 value=1 class="slider" v-model="question2Answer">
+                    </div>
+
+                </div>
+
             </section>
 
             <!-- Page3 -->
@@ -147,7 +153,7 @@
 
             el: "#app",
             data: {
-                step: 1,
+                step: 2,
                 totalSteps: 7,
                 form: {
                     name: null,
@@ -157,7 +163,7 @@
                 },
                 errors: [],
                 showResult: false,
-                question1: [
+                question123: [
                     { value: 1, content: "None of the time" },
                     { value: 2, content: "Some of the time" },
                     { value: 3, content: "Less than half of the time" },
@@ -165,8 +171,10 @@
                     { value: 5, content: "Most of the time" },
                     { value: 6, content: "All of the time" },
                 ],
-                question1Answer: 0,
+                question1Answer: 1,
+                question2Answer: 1,
                 question1Show: "None of the time",
+                question2Show: "None of the time"
             },
             methods: {
                 nextStep: function () {
@@ -204,20 +212,24 @@
                     if (this.step == this.totalSteps)
                         this.step = 0;
                 },
-                question1Display: function (question1Answer) {
-                    var result = this.question1.find(q => q.value == question1Answer);
 
-                    this.question1Show = result.content;
-                },
             },
             created() {
 
             },
-            watch:{
-                question1Answer(value){
-                    var result = this.question1.find(q => q.value == value);
+            mounted() {
+
+            },
+            watch: {
+                question1Answer(value) {
+                    var result = this.question123.find(q => q.value == value);
 
                     this.question1Show = result.content;
+                },
+                question2Answer(value) {
+                    var result = this.question123.find(q => q.value == value);
+
+                    this.question2Show = result.content;
                 }
             }
 
