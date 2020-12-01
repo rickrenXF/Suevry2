@@ -18,7 +18,11 @@
 
             <!-- Front Page -->
             <section v-if="step==0">
-                <div class="head"></div>
+                <div class="head">
+                    <div class="logo">
+                        <img src="./images/logo.png" style="margin-right:30px">Skills Group
+                    </div>
+                </div>
                 <div>
                     <h1 style="text-align: center;font-size: 60px;height: 200px;margin-top: 50px;">Wellbeing<br>Check In
                     </h1>
@@ -28,32 +32,45 @@
                     <p style="font-size: 25px;">5 mins</p>
                 </div>
             </section>
-           <div v-if="step==0" style="height: 235px;">
+            <div v-if="step==0" style="height: 235px;">
 
-            <button @click.prevent="nextStep" class="startButton"  >Get started</button>
-           </div>
-                
-            
+                <button @click.prevent="nextStep" class="startButton">Get started</button>
+            </div>
+
+
 
             <!-- Page1 -->
 
             <section v-if="step==1">
-                <div>
-                    <h1 style="text-align: center;">Question 1</h1>
-                </div>
-                <div>
-                    <h3>My family and I are doing well</h3>
-                </div>
-                <div>
-                    <p>My family and I are doing well</p>
+                <div class="head">
+                    <div class="logo">
+                        <img src="./images/logo.png" style="margin-right:30px">Question 1
+                    </div>
                 </div>
 
-                <input type="text" placeholder="what is your name" class="form-control form-control-lg"
-                    v-model="form.name">
+                <div style="height: 300px;text-align: center;padding: 30px;">
+                    <h3 class="question">My family and I are doing well</h3>
+                </div>
+                <div>
+                    <div style="height: 130px;text-align: center;font-family:'Times New Roman', Times, serif;">
+                        <p style="color:rgb(208, 73, 26);font-size: 40px;">{{question1Show}}</p>
+                    </div>
+
+                    <div style="margin-bottom: 80px;" class="sliderContainer">
+                        <input type="range" min=1 max=6 value=1 class="slider"
+                             v-model="question1Answer">
+                             <!-- @change="question1Display(question1Answer)" -->
+                    </div>
+
+                </div>
+
+                <!-- <input type="text" placeholder="what is your name" class="form-control form-control-lg"
+                    v-model="form.name"> -->
             </section>
 
             <!-- Page2 -->
             <section v-if="step==2">
+                <div class="head"></div>
                 <h3>Question 2</h3>
                 <p>What is your telephone number?</p>
                 <input type="tel" placeholder="what is your phonenumber" class="form-control form-control-lg"
@@ -64,6 +81,7 @@
 
             <!-- Page3 -->
             <section v-if="step==3">
+                <div class="head"></div>
                 <h3>Question 3</h3>
                 <p>What message do you like to put</p>
                 <textarea placeholder="text your message" class="form-control form-control-lg"
@@ -73,6 +91,7 @@
 
             <!-- Page4 -->
             <section v-if="step==4">
+                <div class="head"></div>
                 <h3>Question 4</h3>
                 <p>What message do you like to put</p>
                 <textarea placeholder="text your message" class="form-control form-control-lg"
@@ -82,6 +101,7 @@
 
             <!-- Page5 -->
             <section v-if="step==5">
+                <div class="head"></div>
                 <h3>Question 5</h3>
                 <p>What message do you like to put</p>
                 <textarea placeholder="text your message" class="form-control form-control-lg"
@@ -91,6 +111,7 @@
 
             <!-- Page6 -->
             <section v-if="step==6">
+                <div class="head"></div>
                 <h3>Question 6</h3>
                 <p>What message do you like to put</p>
                 <textarea placeholder="text your message" class="form-control form-control-lg"
@@ -100,6 +121,7 @@
 
             <!-- Page7 -->
             <section v-if="step==7">
+                <div class="head"></div>
                 <h3>Question 7</h3>
                 <p>What message do you like to put</p>
                 <textarea placeholder="text your message" class="form-control form-control-lg"
@@ -107,13 +129,12 @@
 
             </section>
 
-
-
-            <button @click.prevent="previousStep" v-if="step>0">Previous</button>
-            <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps">Next</button>
+            <!-- shared buttons -->
+            <button @click.prevent="previousStep" v-if="step>0" class="buttonBack">Back</button>
+            <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps" class="buttonNext">Next</button>
             <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry">Complete</button>
-
-            <p v-if="showResult">{{form.name}} {{form.email}} {{form.message}}</p>
+            <button v-if="step==totalSteps" @click.prevent="backToFront">Do it again</button>
+            <p v-if="showResult && step==totalSteps">{{form.name}} {{form.email}} {{form.message}}</p>
 
         </form>
 
@@ -126,7 +147,7 @@
 
             el: "#app",
             data: {
-                step: 0,
+                step: 1,
                 totalSteps: 7,
                 form: {
                     name: null,
@@ -136,6 +157,16 @@
                 },
                 errors: [],
                 showResult: false,
+                question1: [
+                    { value: 1, content: "None of the time" },
+                    { value: 2, content: "Some of the time" },
+                    { value: 3, content: "Less than half of the time" },
+                    { value: 4, content: "More than half of the time" },
+                    { value: 5, content: "Most of the time" },
+                    { value: 6, content: "All of the time" },
+                ],
+                question1Answer: 0,
+                question1Show: "None of the time",
             },
             methods: {
                 nextStep: function () {
@@ -151,8 +182,6 @@
                             return alert('Please the fill the form.');
                         }
                     }
-
-
                     this.step++;
                 },
                 previousStep: function () {
@@ -169,10 +198,27 @@
                     this.errors = null;
                     this.showResult = !this.showResult;
 
-                }
-            },
-            mounted() {
+                },
 
+                backToFront: function () {
+                    if (this.step == this.totalSteps)
+                        this.step = 0;
+                },
+                question1Display: function (question1Answer) {
+                    var result = this.question1.find(q => q.value == question1Answer);
+
+                    this.question1Show = result.content;
+                },
+            },
+            created() {
+
+            },
+            watch:{
+                question1Answer(newValue,oldValue){
+                    var result = this.question1.find(q => q.value == newValue);
+
+                    this.question1Show = result.content;
+                }
             }
 
 
