@@ -214,8 +214,8 @@
 
             },
             watch:{
-                question1Answer(newValue,oldValue){
-                    var result = this.question1.find(q => q.value == newValue);
+                question1Answer(value){
+                    var result = this.question1.find(q => q.value == value);
 
                     this.question1Show = result.content;
                 }
