@@ -170,18 +170,18 @@
             },
             methods: {
                 nextStep: function () {
-                    if (this.step == 1) {
-                        if (!this.form.name) {
-                            this.errors = 'Please the fill the form.';
-                            return alert('Please the fill the form.');
-                        }
-                    }
-                    if (this.step == 2) {
-                        if (!this.form.phone || !this.form.email) {
-                            this.errors = 'Please the fill the form.';
-                            return alert('Please the fill the form.');
-                        }
-                    }
+                    // if (this.step == 1) {
+                    //     if (!this.form.name) {
+                    //         this.errors = 'Please the fill the form.';
+                    //         return alert('Please the fill the form.');
+                    //     }
+                    // }
+                    // if (this.step == 2) {
+                    //     if (!this.form.phone || !this.form.email) {
+                    //         this.errors = 'Please the fill the form.';
+                    //         return alert('Please the fill the form.');
+                    //     }
+                    // }
                     this.step++;
                 },
                 previousStep: function () {
@@ -189,12 +189,12 @@
                 },
 
                 sendEnquiry: function () {
-                    if (this.step == 3) {
-                        if (!this.form.message) {
-                            this.errors = 'Please the fill the form.';
-                            return alert('Please the fill the form.');
-                        }
-                    }
+                    // if (this.step == 3) {
+                    //     if (!this.form.message) {
+                    //         this.errors = 'Please the fill the form.';
+                    //         return alert('Please the fill the form.');
+                    //     }
+                    // }
                     this.errors = null;
                     this.showResult = !this.showResult;
 
