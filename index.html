@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="styles.css" rel="stylesheet">
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link href="styles.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 
@@ -17,140 +17,183 @@
             <span v-for="e in errors" :key="e.id">{{e}}</span>
 
             <!-- Front Page -->
-            <section v-if="step==0">
-                <div class="head">
-                    <div class="logo">
-                        <img src="./images/logo.png" style="margin-right:30px">Skills Group
+            <transition name="fade">
+                <div>
+                    <section v-if="step==0">
+                        <div class="head">
+                            <div class="logo">
+                                <img src="./images/logo.png" style="margin-right: 30px" />Skills Group
+                            </div>
+                        </div>
+                        <div>
+                            <h1 style="
+                    text-align: center;
+                    font-size: 60px;
+                    height: 200px;
+                    margin-top: 50px;
+                  ">
+                                Wellbeing<br />Check In
+                            </h1>
+                        </div>
+                        <div style="
+                  height: 160px;
+                  text-align: center;
+                  background-color: rgb(240, 200, 186);
+                  padding-top: 40px;
+                ">
+                            <p style="font-size: 25px"><strong>ESTIMATED TIME</strong></p>
+                            <p style="font-size: 25px">5 mins</p>
+                        </div>
+                    </section>
+                    <div v-if="step==0" style="height: 235px">
+                        <button @click.prevent="nextStep" class="startButton">
+                            Get started
+                        </button>
                     </div>
                 </div>
-                <div>
-                    <h1 style="text-align: center;font-size: 60px;height: 200px;margin-top: 50px;">Wellbeing<br>Check In
-                    </h1>
-                </div>
-                <div style="height: 160px;text-align: center;background-color: rgb(240, 200, 186);padding-top: 40px;">
-                    <p style="font-size: 25px;"><strong>ESTIMATED TIME</strong></p>
-                    <p style="font-size: 25px;">5 mins</p>
-                </div>
-            </section>
-            <div v-if="step==0" style="height: 235px;">
-
-                <button @click.prevent="nextStep" class="startButton">Get started</button>
-            </div>
+            </transition>
 
             <!-- Page1 -->
-            <section v-if="step==1">
-                <div class="head">
-                    <div class="logo">
-                        <img src="./images/logo.png" style="margin-right:30px">Question 1
-                    </div>
-                </div>
-
-                <div style="height: 300px;text-align: center;padding: 30px;">
-                    <h3 class="question">My family and I are doing well</h3>
-                </div>
-                <div>
-                    <div style="height: 130px;text-align: center;font-family:'Times New Roman', Times, serif;">
-                        <p style="color:rgb(208, 73, 26);font-size: 40px;">{{question1Show}}</p>
+            <transition name="fade">
+                <section v-if="step==1">
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 1
+                        </div>
                     </div>
 
-                    <div style="margin-bottom: 80px;" class="sliderContainer">
-                        <input type="range" min=1 max=6 value=1 class="slider" v-model="question1Answer">
-                        <!-- @change="question1Display(question1Answer)" -->
+                    <div style="height: 300px; text-align: center; padding: 30px">
+                        <h3 class="question">My family and I are doing well</h3>
                     </div>
+                    <div>
+                        <div style="
+                  height: 130px;
+                  text-align: center;
+                  font-family: 'Times New Roman', Times, serif;
+                ">
+                            <p style="color: rgb(208, 73, 26); font-size: 40px">
+                                {{question1Show}}
+                            </p>
+                        </div>
 
-                </div>
-
-            </section>
+                        <div style="margin-bottom: 80px" class="sliderContainer">
+                            <input type="range" min="1" max="6" value="1" class="slider" v-model="question1Answer" />
+                            <!-- @change="question1Display(question1Answer)" -->
+                        </div>
+                    </div>
+                </section>
+            </transition>
 
             <!-- Page2 -->
-            <section v-if="step==2">
-                <div class="head">
-                    <div class="logo">
-                        <img src="./images/logo.png" style="margin-right:30px">Question 2
-                    </div>
-                </div>
-                <div style="height: 300px;text-align: center;padding: 30px;">
-                    <h3 class="question">I'm keeping in regular contact with my team</h3>
-                </div>
-                <div>
-                    <div style="height: 130px;text-align: center;font-family:'Times New Roman', Times, serif;">
-                        <p style="color:rgb(208, 73, 26);font-size: 40px;">{{question2Show}}</p>
-                    </div>
 
-                    <div style="margin-bottom: 80px;" class="sliderContainer">
-                        <input type="range" min=1 max=6 value=1 class="slider" v-model="question2Answer">
+            <transition name="fade">
+                <section v-if="step==2">
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 2
+                        </div>
                     </div>
+                    <div style="height: 300px; text-align: center; padding: 30px">
+                        <h3 class="question">
+                            I'm keeping in regular contact with my team
+                        </h3>
+                    </div>
+                    <div>
+                        <div style="
+                  height: 130px;
+                  text-align: center;
+                  font-family: 'Times New Roman', Times, serif;
+                ">
+                            <p style="color: rgb(208, 73, 26); font-size: 40px">
+                                {{question2Show}}
+                            </p>
+                        </div>
 
-                </div>
-
-            </section>
+                        <div style="margin-bottom: 80px" class="sliderContainer">
+                            <input type="range" min="1" max="6" value="1" class="slider" v-model="question2Answer" />
+                        </div>
+                    </div>
+                </section>
+            </transition>
 
             <!-- Page3 -->
-            <section v-if="step==3">
-                <div class="head"></div>
-                <h3>Question 3</h3>
-                <p>What message do you like to put</p>
-                <textarea placeholder="text your message" class="form-control form-control-lg"
-                    v-model="form.message"></textarea>
 
-            </section>
+            <transition name="fade">
+                <section v-if="step==3">
+                    <div class="head"></div>
+                    <h3>Question 3</h3>
+                    <p>What message do you like to put</p>
+                    <textarea placeholder="text your message" class="form-control form-control-lg"
+                        v-model="form.message"></textarea>
+                </section>
+            </transition>
 
             <!-- Page4 -->
-            <section v-if="step==4">
-                <div class="head"></div>
-                <h3>Question 4</h3>
-                <p>What message do you like to put</p>
-                <textarea placeholder="text your message" class="form-control form-control-lg"
-                    v-model="form.message"></textarea>
-
-            </section>
+            <transition name="fade">
+                <section v-if="step==4">
+                    <div class="head"></div>
+                    <h3>Question 4</h3>
+                    <p>What message do you like to put</p>
+                    <textarea placeholder="text your message" class="form-control form-control-lg"
+                        v-model="form.message"></textarea>
+                </section>
+            </transition>
 
             <!-- Page5 -->
-            <section v-if="step==5">
-                <div class="head"></div>
-                <h3>Question 5</h3>
-                <p>What message do you like to put</p>
-                <textarea placeholder="text your message" class="form-control form-control-lg"
-                    v-model="form.message"></textarea>
-
-            </section>
+            <transition name="fade">
+                <section v-if="step==5">
+                    <div class="head"></div>
+                    <h3>Question 5</h3>
+                    <p>What message do you like to put</p>
+                    <textarea placeholder="text your message" class="form-control form-control-lg"
+                        v-model="form.message"></textarea>
+                </section>
+            </transition>
 
             <!-- Page6 -->
-            <section v-if="step==6">
-                <div class="head"></div>
-                <h3>Question 6</h3>
-                <p>What message do you like to put</p>
-                <textarea placeholder="text your message" class="form-control form-control-lg"
-                    v-model="form.message"></textarea>
-
-            </section>
+            <transition name="fade">
+                <section v-if="step==6">
+                    <div class="head"></div>
+                    <h3>Question 6</h3>
+                    <p>What message do you like to put</p>
+                    <textarea placeholder="text your message" class="form-control form-control-lg"
+                        v-model="form.message"></textarea>
+                </section>
+            </transition>
 
             <!-- Page7 -->
-            <section v-if="step==7">
-                <div class="head"></div>
-                <h3>Question 7</h3>
-                <p>What message do you like to put</p>
-                <textarea placeholder="text your message" class="form-control form-control-lg"
-                    v-model="form.message"></textarea>
-
-            </section>
+            <transition name="fade">
+                <section v-if="step==7">
+                    <div class="head"></div>
+                    <h3>Question 7</h3>
+                    <p>What message do you like to put</p>
+                    <textarea placeholder="text your message" class="form-control form-control-lg"
+                        v-model="form.message"></textarea>
+                </section>
+            </transition>
 
             <!-- shared buttons -->
-            <button @click.prevent="previousStep" v-if="step>0" class="buttonBack">Back</button>
-            <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps" class="buttonNext">Next</button>
-            <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry">Complete</button>
-            <button v-if="step==totalSteps" @click.prevent="backToFront">Do it again</button>
-            <p v-if="showResult && step==totalSteps">{{form.name}} {{form.email}} {{form.message}}</p>
-
+            <div>
+                <button @click.prevent="previousStep" v-if="step>0" class="buttonBack">
+                    Back
+                </button>
+                <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps" class="buttonNext">
+                    Next
+                </button>
+                <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry">
+                    Complete
+                </button>
+                <button v-if="step==totalSteps" @click.prevent="backToFront">
+                    Do it again
+                </button>
+                <p v-if="showResult && step==totalSteps">
+                    {{form.name}} {{form.email}} {{form.message}}
+                </p>
+            </div>
         </form>
-
-
-
-
     </div>
     <script>
         const App = new Vue({
-
             el: "#app",
             data: {
                 step: 2,
@@ -159,7 +202,7 @@
                     name: null,
                     email: null,
                     phone: null,
-                    message: null
+                    message: null,
                 },
                 errors: [],
                 showResult: false,
@@ -174,7 +217,7 @@
                 question1Answer: 1,
                 question2Answer: 1,
                 question1Show: "None of the time",
-                question2Show: "None of the time"
+                question2Show: "None of the time",
             },
             methods: {
                 nextStep: function () {
@@ -205,45 +248,44 @@
                     // }
                     this.errors = null;
                     this.showResult = !this.showResult;
-
                 },
 
                 backToFront: function () {
-                    if (this.step == this.totalSteps)
-                        this.step = 0;
+                    if (this.step == this.totalSteps) this.step = 0;
                 },
-
             },
-            created() {
-
-            },
-            mounted() {
-
-            },
+            created() { },
+            mounted() { },
             watch: {
                 question1Answer(value) {
-                    var result = this.question123.find(q => q.value == value);
+                    var result = this.question123.find((q) => q.value == value);
 
                     this.question1Show = result.content;
                 },
                 question2Answer(value) {
-                    var result = this.question123.find(q => q.value == value);
+                    var result = this.question123.find((q) => q.value == value);
 
                     this.question2Show = result.content;
-                }
-            }
-
-
-        })
-
-
-
-
+                },
+            },
+        });
     </script>
 
+    <style>
+        .fade-enter-active
 
+        /* .fade-leave-active*/
+            {
+            transition: opacity 0.5s;
+        }
 
+        .fade-enter
 
+        /* .fade-leave-to */
+            {
+            opacity: 0;
+        }
+    </style>
 </body>
 
 </html>
