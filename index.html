@@ -12,6 +12,8 @@
 </head>
 
 <body>
+
+    </style>>
     <div class="container pt-5 pb-5">
         <form id="app" class="page">
             <span v-for="e in errors" :key="e.id">{{e}}</span>
@@ -117,25 +119,57 @@
             </transition>
 
             <!-- Page3 -->
-
             <transition name="fade">
                 <section v-if="step==3">
-                    <div class="head"></div>
-                    <h3>Question 3</h3>
-                    <p>What message do you like to put</p>
-                    <textarea placeholder="text your message" class="form-control form-control-lg"
-                        v-model="form.message"></textarea>
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 3
+                        </div>
+                    </div>
+                    <div style="height: 300px; text-align: center; padding: 30px">
+                        <h3 class="question">
+                            I feel confident I can manage my wellbeing
+                        </h3>
+                    </div>
+                    <div>
+                        <div style="
+                  height: 150px;
+                  text-align: center;
+                  font-family: 'Times New Roman', Times, serif;
+                ">
+                            <p style="color: rgb(208, 73, 26); font-size: 40px">
+                                {{question3Show}}
+                            </p>
+                        </div>
+
+                        <div class="sliderContainer">
+                            <input type="range" min="1" max="6" value="1" class="slider" v-model="question3Answer" />
+                        </div>
+                    </div>
                 </section>
             </transition>
 
             <!-- Page4 -->
             <transition name="fade">
                 <section v-if="step==4">
-                    <div class="head"></div>
-                    <h3>Question 4</h3>
-                    <p>What message do you like to put</p>
-                    <textarea placeholder="text your message" class="form-control form-control-lg"
-                        v-model="form.message"></textarea>
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 4
+                        </div>
+                    </div>
+                    <div style="height: 300px; text-align: center; padding: 30px">
+                        <h3 class="question">
+                            I know how I can get support with my wellbeing if I need it
+                        </h3>
+                    </div>
+                    <div>
+                        <button @click.prevent="question4No"  v-bind:class="question4Answer? 'question4No':'question4Yes'" :value="question4Answer">
+                            No
+                        </button>
+                        <button @click.prevent="question4Yes" v-bind:class="question4Answer? 'question4Yes':'question4No'" :value="question4Answer">
+                            Yes
+                        </button>
+                    </div>
                 </section>
             </transition>
 
@@ -196,7 +230,7 @@
         const App = new Vue({
             el: "#app",
             data: {
-                step: 2,
+                step: 4,
                 totalSteps: 7,
                 form: {
                     name: null,
@@ -216,8 +250,11 @@
                 ],
                 question1Answer: 1,
                 question2Answer: 1,
+                question3Answer: 1,
                 question1Show: "None of the time",
                 question2Show: "None of the time",
+                question3Show: "None of the time",
+                question4Answer: false,
             },
             methods: {
                 nextStep: function () {
@@ -253,20 +290,29 @@
                 backToFront: function () {
                     if (this.step == this.totalSteps) this.step = 0;
                 },
+                question4Yes: function () {
+                    this.question4Answer=true;
+                },
+                question4No: function () {
+                    this.question4Answer=false;
+                }
+
             },
             created() { },
             mounted() { },
             watch: {
                 question1Answer(value) {
                     var result = this.question123.find((q) => q.value == value);
-
                     this.question1Show = result.content;
                 },
                 question2Answer(value) {
                     var result = this.question123.find((q) => q.value == value);
-
                     this.question2Show = result.content;
                 },
+                question3Answer(value) {
+                    var result = this.question123.find((q) => q.value == value);
+                    this.question3Show = result.content;
+                }
             },
         });
     </script>
