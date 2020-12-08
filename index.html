@@ -162,13 +162,20 @@
                             I know how I can get support with my wellbeing if I need it
                         </h3>
                     </div>
-                    <div>
-                        <button @click.prevent="question4No"  v-bind:class="question4Answer? 'question4No':'question4Yes'" :value="question4Answer">
+                    <div style="height: 300px;">
+                        <button @click.prevent="question4No"
+                            v-bind:class="question4Answer==0?'question4No': (question4Answer==2?'question4Yes':'question4No')"
+                            :value="question4Answer,question4Clicked">
                             No
                         </button>
-                        <button @click.prevent="question4Yes" v-bind:class="question4Answer? 'question4Yes':'question4No'" :value="question4Answer">
+                        <button @click.prevent="question4Yes"
+                            v-bind:class="question4Answer==0? 'question4No':(question4Answer==1?'question4Yes':'question4No')"
+                            :value="question4Answer,question4Clicked">
                             Yes
                         </button>
+                        <p v-if="question4Error"
+                            style="text-align: center;color: red;font-size: 20px;margin-top: 50px;">Please answer before
+                            proceeding</p>
                     </div>
                 </section>
             </transition>
@@ -176,11 +183,20 @@
             <!-- Page5 -->
             <transition name="fade">
                 <section v-if="step==5">
-                    <div class="head"></div>
-                    <h3>Question 5</h3>
-                    <p>What message do you like to put</p>
-                    <textarea placeholder="text your message" class="form-control form-control-lg"
-                        v-model="form.message"></textarea>
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 5
+                        </div>
+                    </div>
+                    <div style="height: 200px; text-align: center; padding: 30px">
+                        <h3 style="margin-top: 30px;font-weight: bold;
+                        font-size: 30px;">
+                            What are concerns you have over the next few weeks?
+                        </h3>
+                    </div>
+                    <div style="height: 400px;text-align: center;margin-bottom: 20px;">
+                       <textarea rows="16" v-model="question5Answer" cols="60" style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
+                    </div>
                 </section>
             </transition>
 
@@ -237,8 +253,7 @@
                     email: null,
                     phone: null,
                     message: null,
-                },
-                errors: [],
+                },               
                 showResult: false,
                 question123: [
                     { value: 1, content: "None of the time" },
@@ -254,35 +269,35 @@
                 question1Show: "None of the time",
                 question2Show: "None of the time",
                 question3Show: "None of the time",
-                question4Answer: false,
+                question4Answer: 0,
+                question4Clicked: false,
+                question4Error: false,
+                question5Answer:''
             },
             methods: {
                 nextStep: function () {
-                    // if (this.step == 1) {
-                    //     if (!this.form.name) {
-                    //         this.errors = 'Please the fill the form.';
-                    //         return alert('Please the fill the form.');
-                    //     }
-                    // }
-                    // if (this.step == 2) {
-                    //     if (!this.form.phone || !this.form.email) {
-                    //         this.errors = 'Please the fill the form.';
-                    //         return alert('Please the fill the form.');
-                    //     }
-                    // }
-                    this.step++;
+
+                    if (this.step == 4) {
+                        if (this.question4Clicked) {
+                            this.question4Error = false;
+                            this.step++;
+                        }
+                        else {
+                            this.question4Error = true;
+
+                        }
+                    } else {
+                        this.question4Error = false;
+                        this.step++;
+                    }
+
                 },
                 previousStep: function () {
                     this.step--;
                 },
 
                 sendEnquiry: function () {
-                    // if (this.step == 3) {
-                    //     if (!this.form.message) {
-                    //         this.errors = 'Please the fill the form.';
-                    //         return alert('Please the fill the form.');
-                    //     }
-                    // }
+
                     this.errors = null;
                     this.showResult = !this.showResult;
                 },
@@ -291,11 +306,13 @@
                     if (this.step == this.totalSteps) this.step = 0;
                 },
                 question4Yes: function () {
-                    this.question4Answer=true;
+                    this.question4Answer = 1;
+                    this.question4Clicked = true;
                 },
                 question4No: function () {
-                    this.question4Answer=false;
-                }
+                    this.question4Answer = 2;
+                    this.question4Clicked = true;
+                },
 
             },
             created() { },
