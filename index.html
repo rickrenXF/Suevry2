@@ -16,7 +16,7 @@
     </style>>
     <div class="container pt-5 pb-5">
         <form id="app" class="page">
-            <span v-for="e in errors" :key="e.id">{{e}}</span>
+           
 
             <!-- Front Page -->
             <transition name="fade">
@@ -203,14 +203,22 @@
             <!-- Page6 -->
             <transition name="fade">
                 <section v-if="step==6">
-                    <div class="head"></div>
-                    <h3>Question 6</h3>
-                    <p>What message do you like to put</p>
-                    <textarea placeholder="text your message" class="form-control form-control-lg"
-                        v-model="form.message"></textarea>
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 6
+                        </div>
+                    </div>
+                    <div style="height: 200px; text-align: center; padding: 30px">
+                        <h3 style="margin-top: 30px;font-weight: bold;
+                        font-size: 30px;">
+                            Is there anything else that we can do to help you?
+                        </h3>
+                    </div>
+                    <div style="height: 400px;text-align: center;margin-bottom: 20px;">
+                       <textarea rows="16" v-model="question6Answer" cols="60" style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
+                    </div>
                 </section>
             </transition>
-
             <!-- Page7 -->
             <transition name="fade">
                 <section v-if="step==7">
@@ -272,7 +280,8 @@
                 question4Answer: 0,
                 question4Clicked: false,
                 question4Error: false,
-                question5Answer:''
+                question5Answer:'',
+                question6Answer:''
             },
             methods: {
                 nextStep: function () {
