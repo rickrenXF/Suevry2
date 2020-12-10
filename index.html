@@ -12,12 +12,9 @@
 </head>
 
 <body>
-
     </style>>
     <div class="container pt-5 pb-5">
         <form id="app" class="page">
-           
-
             <!-- Front Page -->
             <transition name="fade">
                 <div>
@@ -195,7 +192,8 @@
                         </h3>
                     </div>
                     <div style="height: 400px;text-align: center;margin-bottom: 20px;">
-                       <textarea rows="16" v-model="question5Answer" cols="60" style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
+                        <textarea rows="16" v-model="question5Answer" cols="60"
+                            style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
                     </div>
                 </section>
             </transition>
@@ -215,18 +213,33 @@
                         </h3>
                     </div>
                     <div style="height: 400px;text-align: center;margin-bottom: 20px;">
-                       <textarea rows="16" v-model="question6Answer" cols="60" style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
+                        <textarea rows="16" v-model="question6Answer" cols="60"
+                            style="resize: none;border: red solid 2px;border-radius: 5px;"></textarea>
                     </div>
                 </section>
             </transition>
             <!-- Page7 -->
             <transition name="fade">
                 <section v-if="step==7">
-                    <div class="head"></div>
-                    <h3>Question 7</h3>
-                    <p>What message do you like to put</p>
-                    <textarea placeholder="text your message" class="form-control form-control-lg"
-                        v-model="form.message"></textarea>
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Question 7
+                        </div>
+                    </div>
+                    <div style="height: 200px; text-align: center; padding: 30px">
+                        <h3 style="margin-top: 30px;font-weight: bold;
+                        font-size: 30px;">
+                            How would you describe your current living situation?
+                        </h3>
+                    </div>
+                    <div style="height: 400px;text-align: center;margin-bottom: 20px;">
+                        <div style="border: red solid 3px;width: 455px;height: 205px;margin: auto;">
+                            <input type="button" class="q7button" value="Isolating with family" @click="question7Button('Isolating with family')">     
+                            <input type="button" class="q7button" value="Isolating with flatmates" @click="question7Button('Isolating with flatmates')">  
+                            <input type="button" class="q7button" value="Isolating alone" @click="question7Button('Isolating alone')">      
+                            <input type="button" class="q7button" value="Other" @click="question7Other()">                        
+                        </div>
+                    </div>
                 </section>
             </transition>
 
@@ -254,14 +267,14 @@
         const App = new Vue({
             el: "#app",
             data: {
-                step: 4,
+                step: 7,
                 totalSteps: 7,
                 form: {
                     name: null,
                     email: null,
                     phone: null,
                     message: null,
-                },               
+                },
                 showResult: false,
                 question123: [
                     { value: 1, content: "None of the time" },
@@ -280,8 +293,10 @@
                 question4Answer: 0,
                 question4Clicked: false,
                 question4Error: false,
-                question5Answer:'',
-                question6Answer:''
+                question5Answer: '',
+                question6Answer: '',
+                question7Answer:'',
+                question7OtherClick:false
             },
             methods: {
                 nextStep: function () {
@@ -322,6 +337,12 @@
                     this.question4Answer = 2;
                     this.question4Clicked = true;
                 },
+                question7Button(value){
+                    this.question7Answer=value;
+                },
+                question7Other(){
+                    this.question7OtherClick=true;
+                }
 
             },
             created() { },

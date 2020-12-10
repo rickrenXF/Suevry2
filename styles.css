@@ -153,3 +153,17 @@ margin-bottom: 80px;
     height: 45px;
     width: 45px;
 }
+
+
+
+.q7button{
+    width:450px;
+    height: 50px;
+    border: none;
+    text-align: left;
+    font-size: 25px;
+}
+
+.q7button:hover{
+    background-color:  rgb(229, 117, 121);;
+}
