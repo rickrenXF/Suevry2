@@ -9,6 +9,7 @@
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <link href="styles.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -236,46 +237,12 @@
                     <div style="height: 400px;text-align: center;margin-bottom: 20px;">
                         <div style="border: red solid 3px;width: 455px;height: 205px;margin: auto;">
                             <input type="button" class="q7button" value="Isolating with family"
-                                @click="question7Button('Isolating with family')">
+                                @click="question7Button('Isolating with family',1)" v-bind:class="question7Button1? 'q7buttonChosen':'q7button'">
                             <input type="button" class="q7button" value="Isolating with flatmates"
-                                @click="question7Button('Isolating with flatmates')">
+                                @click="question7Button('Isolating with flatmates',2)" v-bind:class="question7Button2? 'q7buttonChosen':'q7button'">
                             <input type="button" class="q7button" value="Isolating alone"
-                                @click="question7Button('Isolating alone')">
-                            <input type="button" class="q7button" value="Other" @click="question7Other()">
-                        </div>
-                        <div v-if="question7OtherClick" style="text-align: left;">
-                            <p style="font-size: 20px;;margin-left: 30px;"><span style="color: red;">*</span>Please
-                                describe your situation</p>
-                            <textarea style="width: 455px;height: 125px;margin-left: 30px;border:red solid 2px;"
-                                v-model="question7Answer"></textarea>
-                            <p v-if="question7Error" style="color: red;margin-left: 100px;font-size: 20px;">Please
-                                answer before proceeding</p>
-                        </div>
-                    </div>
-                </section>
-            </transition>
-            <transition name="fade">
-                <section v-if="step==8">
-                    <div class="head">
-                        <div class="logo">
-                            <img src="./images/logo.png" style="margin-right: 30px" />Question 7
-                        </div>
-                    </div>
-                    <div style="height: 200px; text-align: center; padding: 30px">
-                        <h3 style="margin-top: 30px;font-weight: bold;
-                        font-size: 30px;">
-                            {{Summary}}
-                        </h3>
-                    </div>
-                    <div style="height: 400px;text-align: center;margin-bottom: 20px;">
-                        <div style="border: red solid 3px;width: 455px;height: 205px;margin: auto;">
-                            <input type="button" class="q7button" value="Isolating with family"
-                                @click="question7Button('Isolating with family')">
-                            <input type="button" class="q7button" value="Isolating with flatmates"
-                                @click="question7Button('Isolating with flatmates')">
-                            <input type="button" class="q7button" value="Isolating alone"
-                                @click="question7Button('Isolating alone')">
-                            <input type="button" class="q7button" value="Other" @click="question7Other()">
+                                @click="question7Button('Isolating alone',3)" v-bind:class="question7Button3? 'q7buttonChosen':'q7button'">
+                            <input type="button" class="q7button" value="Other" @click="question7Other()" v-bind:class="question7Button4? 'q7buttonChosen':'q7button'">
                         </div>
                         <div v-if="question7OtherClick" style="text-align: left;">
                             <p style="font-size: 20px;;margin-left: 30px;"><span style="color: red;">*</span>Please
@@ -289,6 +256,24 @@
                 </section>
             </transition>
 
+             <!-- Summary Page -->
+            <transition name="fade">
+                <section v-if="step==8">
+                    <div class="head">
+                        <div class="logo">
+                            <img src="./images/logo.png" style="margin-right: 30px" />Result
+                        </div>
+                    </div>
+                    <div style="height: 500px; text-align: center; padding: 30px">
+                        <h3 style="margin-top: 30px;font-weight: bold;
+                        font-size: 30px;">
+                            {{summary}}
+                        </h3>
+                    </div>
+                   
+                </section>
+            </transition>
+
             <!-- shared buttons -->
             <div>
                 <button @click.prevent="previousStep" v-if="step>0" class="buttonBack">
@@ -297,15 +282,13 @@
                 <button @click.prevent="nextStep" v-if="step>0 && step!==totalSteps" class="buttonNext">
                     Next
                 </button>
-                <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry">
+                <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry" class="buttonNext">
                     Complete
                 </button>
-                <button v-if="step==totalSteps" @click.prevent="backToFront">
+                <button v-if="step==totalSteps" @click.prevent="backToFront" class="buttonNext" style="margin-top: 30px;margin-left: 135px;">
                     Do it again
                 </button>
-                <p v-if="showResult && step==totalSteps">
-                    {{form.name}} {{form.email}} {{form.message}}
-                </p>
+               
             </div>
         </form>
     </div>
@@ -344,7 +327,11 @@
                 question7Answer: null,
                 question7OtherClick: false,
                 question7Error: false,
-                Summary:""
+                question7Button1:false,
+                question7Button2:false,
+                question7Button3:false,
+                question7Button4:false,
+               
             },
             methods: {
                 nextStep: function () {
@@ -381,8 +368,6 @@
 
                 sendEnquiry: function () {
 
-                    this.errors = null;
-                    this.showResult = !this.showResult;
                 },
 
                 backToFront: function () {
@@ -396,23 +381,54 @@
                     this.question4Answer = 2;
                     this.question4Clicked = true;
                 },
-                question7Button(value) {
+                question7Button(value,num) {
                     this.question7Answer = value;
                     this.question7OtherClick = false;
                     this.question7Error=false;
+                    if(num==1){
+                        this.question7Button1=true;
+                        this.question7Button2=false;
+                        this.question7Button3=false;
+                        this.question7Button4=false;
+                    }
+                    if(num==2){
+                        this.question7Button2=true;
+                        this.question7Button1=false;
+                        this.question7Button3=false;
+                        this.question7Button4=false;
+                    }
+                    if(num==3){
+                        this.question7Button3=true;
+                        this.question7Button1=false;
+                        this.question7Button2=false;
+                        this.question7Button4=false;
+                    }
                 },
                 question7Other() {
                     this.question7OtherClick = !this.question7OtherClick;
+                    this.question7Button4=true;
+                    this.question7Button1=false;
+                        this.question7Button2=false;
+                        this.question7Button3=false;
                     if(this.question7OtherClick==false){
                         this.question7Answer=null;
                     }
-                },
-                Summary(){
-                    var result={
-                        "1":this.question1Answer
-                    }
                 }
 
+            },
+            computed:{
+                summary:function(){
+                    var result = {
+                        1:this.question1Answer,
+                        2:this.question2Answer,
+                        3:this.question3Answer,
+                        4:this.question4Answer,
+                        5:this.question5Answer,
+                        6:this.question6Answer,
+                        7:this.question7Answer
+                    }
+                    return result;
+                }
             },
             created() { },
             mounted() { },

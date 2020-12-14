@@ -167,3 +167,12 @@ margin-bottom: 80px;
 .q7button:hover{
     background-color:  rgb(229, 117, 121);;
 }
+
+.q7buttonChosen{
+    width:450px;
+    height: 50px;
+    border: none;
+    text-align: left;
+    font-size: 25px;
+    background-color: red;
+}
