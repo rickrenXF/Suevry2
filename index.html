@@ -171,11 +171,10 @@
                             :value="question4Answer,question4Clicked">
                             Yes
                         </button>
-                        
+
                     </div>
-                    <p v-if="question4Error"
-                            style="text-align: center;color: red;font-size: 20px;margin-top: 50px;">Please answer before
-                            proceeding</p>
+                    <p v-if="question4Error" style="text-align: center;color: red;font-size: 20px;">Please answer before
+                        proceeding</p>
                 </section>
             </transition>
 
@@ -237,12 +236,16 @@
                     <div style="height: 400px;text-align: center;margin-bottom: 20px;">
                         <div style="border: red solid 3px;width: 455px;height: 205px;margin: auto;">
                             <input type="button" class="q7button" value="Isolating with family"
-                                @click="question7Button('Isolating with family',1)" v-bind:class="question7Button1? 'q7buttonChosen':'q7button'">
+                                @click="question7Button('Isolating with family',1)"
+                                v-bind:class="question7Button1? 'q7buttonChosen':'q7button'">
                             <input type="button" class="q7button" value="Isolating with flatmates"
-                                @click="question7Button('Isolating with flatmates',2)" v-bind:class="question7Button2? 'q7buttonChosen':'q7button'">
+                                @click="question7Button('Isolating with flatmates',2)"
+                                v-bind:class="question7Button2? 'q7buttonChosen':'q7button'">
                             <input type="button" class="q7button" value="Isolating alone"
-                                @click="question7Button('Isolating alone',3)" v-bind:class="question7Button3? 'q7buttonChosen':'q7button'">
-                            <input type="button" class="q7button" value="Other" @click="question7Other()" v-bind:class="question7Button4? 'q7buttonChosen':'q7button'">
+                                @click="question7Button('Isolating alone',3)"
+                                v-bind:class="question7Button3? 'q7buttonChosen':'q7button'">
+                            <input type="button" class="q7button" value="Other" @click="question7Other()"
+                                v-bind:class="question7Button4? 'q7buttonChosen':'q7button'">
                         </div>
                         <div v-if="question7OtherClick" style="text-align: left;">
                             <p style="font-size: 20px;;margin-left: 30px;"><span style="color: red;">*</span>Please
@@ -256,7 +259,7 @@
                 </section>
             </transition>
 
-             <!-- Summary Page -->
+            <!-- Summary Page -->
             <transition name="fade">
                 <section v-if="step==8">
                     <div class="head">
@@ -268,9 +271,10 @@
                         <h3 style="margin-top: 30px;font-weight: bold;
                         font-size: 30px;">
                             {{summary}}
+                            response : {{info}}
                         </h3>
                     </div>
-                   
+
                 </section>
             </transition>
 
@@ -285,10 +289,11 @@
                 <button v-if="step==totalSteps" type="submit" @click.prevent="sendEnquiry" class="buttonNext">
                     Complete
                 </button>
-                <button v-if="step==totalSteps" @click.prevent="backToFront" class="buttonNext" style="margin-top: 30px;margin-left: 135px;">
+                <button v-if="step==totalSteps" @click.prevent="backToFront" class="buttonNext"
+                    style="margin-top: 30px;margin-left: 135px;">
                     Do it again
                 </button>
-               
+
             </div>
         </form>
     </div>
@@ -324,14 +329,14 @@
                 question4Error: false,
                 question5Answer: '',
                 question6Answer: '',
-                question7Answer: null,
+                question7Answer: '',
                 question7OtherClick: false,
                 question7Error: false,
-                question7Button1:false,
-                question7Button2:false,
-                question7Button3:false,
-                question7Button4:false,
-               
+                question7Button1: false,
+                question7Button2: false,
+                question7Button3: false,
+                question7Button4: false,
+                info: ""
             },
             methods: {
                 nextStep: function () {
@@ -345,19 +350,18 @@
                             this.question4Error = true;
 
                         }
-                    } 
-                    
+                    }
 
                     else if (this.step == 7) {
                         if (this.question7Answer == "") {
                             this.question7Error = true;
                         }
-                        else{
-                        this.step++;
-                    }
+                        else {
+                            this.step++;
+                        }
                     }
 
-                    else{
+                    else {
                         this.step++;
                     }
 
@@ -381,51 +385,71 @@
                     this.question4Answer = 2;
                     this.question4Clicked = true;
                 },
-                question7Button(value,num) {
+                question7Button(value, num) {
                     this.question7Answer = value;
                     this.question7OtherClick = false;
-                    this.question7Error=false;
-                    if(num==1){
-                        this.question7Button1=true;
-                        this.question7Button2=false;
-                        this.question7Button3=false;
-                        this.question7Button4=false;
+                    this.question7Error = false;
+                    if (num == 1) {
+                        this.question7Button1 = true;
+                        this.question7Button2 = false;
+                        this.question7Button3 = false;
+                        this.question7Button4 = false;
                     }
-                    if(num==2){
-                        this.question7Button2=true;
-                        this.question7Button1=false;
-                        this.question7Button3=false;
-                        this.question7Button4=false;
+                    if (num == 2) {
+                        this.question7Button2 = true;
+                        this.question7Button1 = false;
+                        this.question7Button3 = false;
+                        this.question7Button4 = false;
                     }
-                    if(num==3){
-                        this.question7Button3=true;
-                        this.question7Button1=false;
-                        this.question7Button2=false;
-                        this.question7Button4=false;
+                    if (num == 3) {
+                        this.question7Button3 = true;
+                        this.question7Button1 = false;
+                        this.question7Button2 = false;
+                        this.question7Button4 = false;
                     }
                 },
                 question7Other() {
                     this.question7OtherClick = !this.question7OtherClick;
-                    this.question7Button4=true;
-                    this.question7Button1=false;
-                        this.question7Button2=false;
-                        this.question7Button3=false;
-                    if(this.question7OtherClick==false){
-                        this.question7Answer=null;
+                    this.question7Button4 = true;
+                    this.question7Button1 = false;
+                    this.question7Button2 = false;
+                    this.question7Button3 = false;
+                    if (this.question7OtherClick == false) {
+                        this.question7Answer = null;
                     }
+                },
+                sendEnquiry() {
+
+                    const instance = axios.create({
+                        baseURL: 'https://localhost:44329',
+                        headers: {
+                            
+                        }
+                    });
+                    // or: instance.defaults.headers.common['header'] = TOKEN;
+
+                   instance.post('/WeatherForecast')
+                        .then((result) => {
+                            this.info = result.data
+                        })
+
+
+
+                    // axios.get('https://localhost:44329/WeatherForecast')
+                    //     .then(response => (this.info = response))
                 }
 
             },
-            computed:{
-                summary:function(){
+            computed: {
+                summary: function () {
                     var result = {
-                        1:this.question1Answer,
-                        2:this.question2Answer,
-                        3:this.question3Answer,
-                        4:this.question4Answer,
-                        5:this.question5Answer,
-                        6:this.question6Answer,
-                        7:this.question7Answer
+                        1: this.question1Answer,
+                        2: this.question2Answer,
+                        3: this.question3Answer,
+                        4: this.question4Answer,
+                        5: this.question5Answer,
+                        6: this.question6Answer,
+                        7: this.question7Answer
                     }
                     return result;
                 }
