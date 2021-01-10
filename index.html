@@ -336,7 +336,8 @@
                 question7Button2: false,
                 question7Button3: false,
                 question7Button4: false,
-                info: ""
+                resultForPost: '',
+                info: ''
             },
             methods: {
                 nextStep: function () {
@@ -423,12 +424,12 @@
                     const instance = axios.create({
                         baseURL: 'https://localhost:44329',
                         headers: {
-                            
+
                         }
                     });
                     // or: instance.defaults.headers.common['header'] = TOKEN;
-
-                   instance.post('/WeatherForecast')
+                    const a={name:"James joiu"}
+                    instance.post('/WeatherForecast',this.resultForPost)
                         .then((result) => {
                             this.info = result.data
                         })
@@ -451,6 +452,7 @@
                         6: this.question6Answer,
                         7: this.question7Answer
                     }
+                    this.resultForPost = result
                     return result;
                 }
             },
